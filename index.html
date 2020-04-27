@@ -14,7 +14,8 @@
             <div class="small-6 columns">
                 <h1 class="text-center">TU</h1>
                 <div class="curarthbar">
-                    <div class="curarthbar text-center" style="background-color: goldenrod; margin: 0; color: white;">
+                    <div class="curarthbar text-center" style="background-color: goldenrod; margin: 0; color: white;" :style="{width: playerHealth + '%'}">
+                        {{playerHealth}}
                     </div>
                 </div>
             </div>
@@ -22,23 +23,24 @@
                 <h1 class="text-center">MONSTRUO</h1>
                 <div class="curarthbar">
                     <div class="curarthbar text-center"
-                        style="background-color: rgb(0, 81, 128); margin: 0; color: white;">
-             </div>
+                        style="background-color: rgb(0, 81, 128); margin: 0; color: white;" :style="{width: monsterHealth + '%'}">
+                        {{monsterHealth}}
+                    </div>
                 </div>
             </div>
         </section>
-        <section class="row controls">
+        <section class="row controls" v-if="!gameIsRunning">
             <div class="small-12 columns">
-                <button id="start-game">
+                <button id="start-game" @click="startGame">
                     EMPEZAR JUEGO NUEVO</button>
             </div>
         </section>
         <section class="row controls" v-else>
             <div class="small-12 columns">
-                <button id="atacar" >ATACAR</button>
-                <button id="ataque-especial" >ATAQUE ESPECIAL</button>
-                <button id="curar" >CURAR</button>
-                <button id="rendirse" >RENDIRSE</button>
+                <button id="atacar" @click="attack">ATACAR</button>
+                <button id="ataque-especial" @click="specialAtack">ATAQUE ESPECIAL</button>
+                <button id="curar" @click="heal">CURAR</button>
+                <button id="rendirse" @click="giveUp">RENDIRSE</button>
             </div>
         </section>
         <section class="row log">
