@@ -43,12 +43,12 @@
                 <button id="rendirse" @click="giveUp">RENDIRSE</button>
             </div>
         </section>
-        <section class="row log">
+        <section class="row log" v-if="turns.length > 0">
             <div class="small-12 columns">
-
                 <ul>
-                    <li>
-                        
+                    <li v-for="(turn, index) in turns"
+                    :class="{'old-turn' : index > 1, 'player-turn' : turn.isPlayer, 'monster-turn': !turn.isPlayer }">
+                        {{turn.text}}
                     </li>
                 </ul>
 
@@ -57,5 +57,27 @@
     </div>
     <script src="app.js"></script>
 </body>
+
+<style>
+
+    li {
+        padding: 8px;
+    }
+
+    .old-turn {
+        opacity: 0.5;
+    }
+
+    .player-turn {
+        background-color: goldenrod;
+        text-align: left;
+    }
+    
+    .monster-turn{
+        background-color: rgb(0, 81, 128);
+        text-align: right;
+    }
+    
+</style>
 
 </html>
