@@ -11,15 +11,26 @@
 <body>
     <div id="app">
         <section class="row">
-            <div class="small-6 columns">
-                <h1 class="text-center">TU</h1>
+            <div class="small-5 columns">
+                <h1 class="text-center">TÚ</h1>
                 <div class="curarthbar">
                     <div class="curarthbar text-center" style="background-color: goldenrod; margin: 0; color: white;" :style="{width: playerHealth + '%'}">
                         {{playerHealth}}
                     </div>
                 </div>
             </div>
-            <div class="small-6 columns">
+
+            <div class="small-2 columns">
+                <div v-if="winner == 'player'">
+                    <img src="img/player.jpg" alt="player" class="img-thumbnail">
+                </div>
+                <div v-if="winner == 'monster'">
+                    <img src="img/monster.webp" alt="monster" class="img-thumbnail">
+                </div>
+
+            </div>
+
+            <div class="small-5 columns">
                 <h1 class="text-center">MONSTRUO</h1>
                 <div class="curarthbar">
                     <div class="curarthbar text-center"

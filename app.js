@@ -5,6 +5,7 @@ new Vue({
         monsterHealth: 100,
         gameIsRunning: false,
         specialAttackCount: 0,
+        winner: '',
         turns: []   
     },
     methods: {
@@ -13,11 +14,12 @@ new Vue({
             this.playerHealth = 100;
             this.monsterHealth = 100;
             this.specialAttackCount = 0;
+            this.winner = '';
             this.turns = [];
         },
         attack: function() {
             const damage = this.calculateDamage(3,10);
-            this.monsterHealth -= damage;
+            this.monsterHealth = Math.max(0, this.monsterHealth - damage);
 
             this.turns.unshift({
                 isPlayer: true,
@@ -31,7 +33,7 @@ new Vue({
         },
         specialAttack: function() {
             const damage = this.calculateDamage(10, 20);
-            this.monsterHealth -= damage;
+            this.monsterHealth = Math.max(0, this.monsterHealth - damage);;
             this.specialAttackCount++;
 
             this.turns.unshift({
@@ -57,10 +59,17 @@ new Vue({
         },
         giveUp: function() {
             this.gameIsRunning = false;
+            this.playerHealth = 0;
+            this.winner = 'monster';
+
+            this.turns.unshift({
+                isPlayer: true,
+                text: `El jugador se rinde!`
+            })
         },
         monsterAttacks: function(){
             const damage = this.calculateDamage(5,12);
-            this.playerHealth -= damage;
+            this.playerHealth = Math.max(0, this.playerHealth - damage);
 
             this.turns.unshift({
                 isPlayer: false,
@@ -75,6 +84,7 @@ new Vue({
         },
         checkWin: function(){
             if(this.monsterHealth <= 0){
+                this.winner = 'player';
                 if(confirm('Ganaste! Jugar de nuevo?')){
                     this.startGame();
                 } else {
@@ -83,6 +93,7 @@ new Vue({
                 return true;
             }
             else if (this.playerHealth <= 0) {
+                this.winner = 'monster';
                 if(confirm('Perdiste! Jugar de nuevo?')){
                     this.startGame();
                 }
