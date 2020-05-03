@@ -37,15 +37,15 @@
         </section>
         <section class="row controls" v-else>
             <div class="small-12 columns">
-                <button id="atacar" @click="attack">ATACAR</button>
-                <button id="ataque-especial" @click="specialAttack">ATAQUE ESPECIAL</button>
-                <button id="curar" @click="heal">CURAR</button>
-                <button id="rendirse" @click="giveUp">RENDIRSE</button>
+                <button id="attack" @click="attack">ATACAR</button>
+                <button id="special-attack" :class="{'btn-disabled' : specialAttackCount >= 3}" @click="specialAttack">ATAQUE ESPECIAL</button>
+                <button id="heal" :class="{'btn-disabled' : playerHealth >= 100}" @click="heal">CURAR</button>
+                <button id="give-up" @click="giveUp">RENDIRSE</button>
             </div>
         </section>
         <section class="row log" v-if="turns.length > 0">
             <div class="small-12 columns">
-                <ul>
+                <ul class="turns">
                     <li v-for="(turn, index) in turns"
                     :class="{'old-turn' : index > 1, 'player-turn' : turn.isPlayer, 'monster-turn': !turn.isPlayer }">
                         {{turn.text}}
@@ -57,28 +57,5 @@
     </div>
     <script src="app.js"></script>
 </body>
-
-<style>
-
-    li {
-        padding: 8px;
-    }
-
-    .old-turn {
-        opacity: 0.5;
-    }
-
-    .player-turn {
-        background-color: goldenrod;
-        text-align: left;
-    }
-    
-    .monster-turn{
-        background-color: rgb(0, 81, 128);
-        text-align: right;
-        color: white;
-    }
-    
-</style>
 
 </html>

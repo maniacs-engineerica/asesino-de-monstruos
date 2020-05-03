@@ -4,6 +4,7 @@ new Vue({
         playerHealth: 100,
         monsterHealth: 100,
         gameIsRunning: false,
+        specialAttackCount: 0,
         turns: []   
     },
     methods: {
@@ -11,10 +12,11 @@ new Vue({
             this.gameIsRunning = true;
             this.playerHealth = 100;
             this.monsterHealth = 100;
-            this.turns = []
+            this.specialAttackCount = 0;
+            this.turns = [];
         },
         attack: function() {
-            var damage = this.calculateDamage(3,10);
+            const damage = this.calculateDamage(3,10);
             this.monsterHealth -= damage;
 
             this.turns.unshift({
@@ -28,8 +30,9 @@ new Vue({
             this.monsterAttacks();
         },
         specialAttack: function() {
-            let damage = this.calculateDamage(10, 20)
+            const damage = this.calculateDamage(10, 20);
             this.monsterHealth -= damage;
+            this.specialAttackCount++;
 
             this.turns.unshift({
                 isPlayer: true,
@@ -42,14 +45,21 @@ new Vue({
             this.monsterAttacks();
         }, 
         heal: function() {
-            this.playerHealth = Math.min(100, this.playerHealth+10)
-            this.monsterAttacks()
+            const oldPlayerHealth = this.playerHealth;
+            this.playerHealth = Math.min(100, this.playerHealth+10);
+
+            this.turns.unshift({
+                isPlayer: true,
+                text: `El jugador recupera un ${this.playerHealth - oldPlayerHealth}%`
+            })
+
+            this.monsterAttacks();
         },
         giveUp: function() {
             this.gameIsRunning = false;
         },
         monsterAttacks: function(){
-            var damage = this.calculateDamage(5,12);
+            const damage = this.calculateDamage(5,12);
             this.playerHealth -= damage;
 
             this.turns.unshift({
