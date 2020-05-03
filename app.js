@@ -23,6 +23,7 @@ new Vue({
 
             this.turns.unshift({
                 isPlayer: true,
+                endLog: false,
                 text: `El jugador golpea al monstruo un ${damage}%`
             })
             
@@ -38,6 +39,7 @@ new Vue({
 
             this.turns.unshift({
                 isPlayer: true,
+                endLog: false,
                 text: `El jugador golpea poderosamente al monstruo un ${damage}%`
             })
 
@@ -52,6 +54,7 @@ new Vue({
 
             this.turns.unshift({
                 isPlayer: true,
+                endLog: false,
                 text: `El jugador recupera un ${this.playerHealth - oldPlayerHealth}%`
             })
 
@@ -64,6 +67,7 @@ new Vue({
 
             this.turns.unshift({
                 isPlayer: true,
+                endLog: true,
                 text: `El jugador se rinde!`
             })
         },
@@ -73,6 +77,7 @@ new Vue({
 
             this.turns.unshift({
                 isPlayer: false,
+                endLog: false,
                 text: `El monstruo golpea al jugador un ${damage}%`
             })
 
@@ -85,21 +90,26 @@ new Vue({
         checkWin: function(){
             if(this.monsterHealth <= 0){
                 this.winner = 'player';
-                if(confirm('Ganaste! Jugar de nuevo?')){
-                    this.startGame();
-                } else {
-                    this.gameIsRunning = false;
-                }
+                this.gameIsRunning = false;
+
+                this.turns.unshift({
+                    isPlayer: true,
+                    endLog: true,
+                    text: `EL JUGADOR VENCE AL MONSTRUO!`
+                })
+
                 return true;
             }
             else if (this.playerHealth <= 0) {
                 this.winner = 'monster';
-                if(confirm('Perdiste! Jugar de nuevo?')){
-                    this.startGame();
-                }
-                else {
-                    this.gameIsRunning = false;
-                }
+                this.gameIsRunning = false;
+
+                this.turns.unshift({
+                    isPlayer: false,
+                    endLog: true,
+                    text: `EL MONSTRUO VENCE AL JUGADOR!`
+                })
+
                 return true;                
             }
             return false;
